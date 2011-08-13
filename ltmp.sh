@@ -2,10 +2,10 @@
 
 usage()
 {
-  echo "Usage: $0 <yourdomain.com> <mysql_username> <mysql_password>"
+  echo "Usage: $0 <yourdomain.com> <mysql_password>"
 }
 
-if [ $# -lt 3 ]; then 
+if [ $# -lt 2 ]; then 
   usage
   exit 1
 fi
@@ -14,8 +14,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 DOMAIN=$1
-MYSQL_USER=$2
-MYSQL_PASSWORD=$3 
+MYSQL_PASSWORD=$2 
 
 UID=`id -u`
 CWD=`pwd`
@@ -53,7 +52,7 @@ TO_INSTALL="build-essential gcc g++ make autoconf automake \
            libncurses5-dev libcurl4-gnutls-dev libjpeg-dev            \
            libpng12-dev libxml2-dev zlib1g-dev libfreetype6           \
            libfreetype6-dev libssl-dev libcurl3 libcurl4-openssl-dev  \
-           libcurl4-gnutls-dev mcrypt"
+           libcurl4-gnutls-dev mcrypt memcached libev-dev libev3"
 
 for packages in $TO_INSTALL 
 do 
@@ -82,33 +81,29 @@ do
 
   DIR=`echo "$filename" | sed -n 's/\(.*\)\.tar\.*$' `
   cd $DIR 
-  chmod 0755 $cmdfile
-  $cmdfile 
-  CD $CWD
+  chmod 0755 ./$cmdfile
+  ./$cmdfile 
+  cd $CWD
 done < $LTMPCONF
 
 echo "====================  install completed ==========================="
 #phpinfo
-cat >/home/wwwroot/phpinfo.php<<eof
+cat >/home/wwwroot/phpinfo.php<<EOF
 <?
 phpinfo();
 ?>
-eof
+EOF
 
 #prober
-tar zxvf p.tar.gz
-cp p.php /home/wwwroot/p.php
+cp probe.php /home/wwwroot/probe.php
 
-cp conf/index.html /home/wwwroot/index.html
+cp index.html /home/wwwroot/index.html
 
 #start up
-echo "Download new nginx init.d file......"
-wget -c http://soft.vpser.net/lnmp/ext/init.d.nginx
-cp init.d.nginx /etc/init.d/nginx
-chmod +x /etc/init.d/nginx
+#echo "Download new lighttpd init.d file......"
 update-rc.d -f mysql defaults
-update-rc.d -f nginx defaults
-update-rc.d -f php-fpm defaults
+update-rc.d -f php defaults
+update-rc.d -f lighttpd defaults
 
 cd $CWD
 cp lnmp /root/lnmp
@@ -116,29 +111,9 @@ chmod +x /root/lnmp
 cp vhost.sh /root/vhost.sh
 chmod +x /root/vhost.sh
 /etc/init.d/mysql start
-/etc/init.d/php-fpm start
-/etc/init.d/nginx start
-echo "===================================== Check install ==================================="
-clear
-if [ -s /usr/local/nginx ]; then
-  echo "/usr/local/nginx [found]"
-  else
-  echo "Error: /usr/local/nginx not found!!!"
-fi
+/etc/init.d/php start
+/etc/init.d/lighttpd start
 
-if [ -s /usr/local/php ]; then
-  echo "/usr/local/php [found]"
-  else
-  echo "Error: /usr/local/php not found!!!"
-fi
-
-if [ -s /usr/local/mysql ]; then
-  echo "/usr/local/mysql [found]"
-  else
-  echo "Error: /usr/local/mysql not found!!!"
-fi
-
-echo "========================== Check install ================================"
 
 echo "Install LTMP V0.7 completed! enjoy it."
 echo "========================================================================="
@@ -147,19 +122,3 @@ echo "========================================================================="
 echo ""
 echo "For more information please visit http://www.ltmp.net/"
 echo ""
-echo "lnmp status manage: /root/lnmp {start|stop|reload|restart|kill|status}"
-echo "default mysql root password:$mysqlrootpwd"
-echo "phpinfo : http://$domain/phpinfo.php"
-echo "phpMyAdmin : http://$domain/phpmyadmin/"
-echo "Prober : http://$domain/p.php"
-echo ""
-echo "The path of some dirs:"
-echo "mysql dir:   /usr/local/mysql"
-echo "php dir:     /usr/local/php"
-echo "nginx dir:   /usr/local/nginx"
-echo "web dir :     /home/wwwroot"
-echo ""
-echo "========================================================================="
-fi
-/root/lnmp status
-netstat -ntl
