@@ -16,10 +16,10 @@ export PATH
 DOMAIN=$1
 MYSQL_PASSWORD=$2 
 
-UID=`id -u`
+MYUID=`id -u`
 CWD=`pwd`
 
-if [ $UID != "0" ]; then
+if [ $MYUID != "0" ]; then
     echo "Capton: No root, no running"
     exit 1
 fi
