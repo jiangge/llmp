@@ -93,10 +93,16 @@ phpinfo();
 ?>
 EOF
 
+
 #prober
 cp probe.php /home/wwwroot/probe.php
+cp index.html /home/wwwroot/index.html
 
-#cp index.html /home/wwwroot/index.html
+cp rc.lighttpd /etc/init.d/lighttpd
+chmod +x /etc/init.d/lighttpd
+
+cp rc.php /etc/init.d/php
+chmod +x /etc/init.d/php
 
 #start up
 #echo "Download new lighttpd init.d file......"
@@ -105,8 +111,6 @@ update-rc.d -f php defaults
 update-rc.d -f lighttpd defaults
 
 cd $CWD
-cp lnmp /root/lnmp
-chmod +x /root/lnmp
 cp vhost.sh /root/vhost.sh
 chmod +x /root/vhost.sh
 /etc/init.d/mysql start
