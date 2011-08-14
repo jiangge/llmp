@@ -7,6 +7,8 @@ make install
 
 cp php.ini-production /usr/local/php/etc/php.ini 
 
+strip /usr/local/php/bin/php-cgi
+
 
 # memcache
 if [ ! -f memcache-3.0.5.tgz ]; then

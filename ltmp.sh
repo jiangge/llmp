@@ -30,8 +30,7 @@ apt-get update
 REMOVED="libmysqlclient15off libmysqlclient15-dev mysql-common \
         apache2 apache2-doc apache2-mpm-prefork apache2-utils   \
         apache2.2-common lighttpd php apache2-mpm-worker        \
-        mysql-client mysql-server" 
-
+        mysql-client mysql-server lighttpd" 
 
 for PACK in $REMOVED
 do
@@ -97,7 +96,7 @@ EOF
 #prober
 cp probe.php /home/wwwroot/probe.php
 
-cp index.html /home/wwwroot/index.html
+#cp index.html /home/wwwroot/index.html
 
 #start up
 #echo "Download new lighttpd init.d file......"
