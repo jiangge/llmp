@@ -9,6 +9,18 @@ cp php.ini-production /usr/local/php/etc/php.ini
 
 strip /usr/local/php/bin/php-cgi
 
+if [ ! -f xcache-1.3.2.tar.bz2 ]; then 
+  wget -c http://xcache.lighttpd.net/pub/Releases/1.3.2/xcache-1.3.2.tar.bz2
+fi
+
+# xcache
+tar -zxf xcache-*.tar.bz2
+cd xcache
+/usr/local/php/bin/phpize
+./configure --enable-xcache
+make && make install 
+cat xcache.ini >> /etc/php.ini 
+
 
 # memcache
 if [ ! -f memcache-3.0.5.tgz ]; then
@@ -20,29 +32,6 @@ cd memcache-3.0.5/
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config
 make && make install 
-cd ../
+cd ../ 
 
-# ZendOptimizer
-if [ `getconf WORD_BIT` = '32' ] && [ `getconf LONG_BIT` = '64' ] ; then
-  wget -c http://soft.vpser.net/web/zend/ZendOptimizer-3.3.9-linux-glibc23-x86_64.tar.gz
-  tar zxvf ZendOptimizer-3.3.9-linux-glibc23-x86_64.tar.gz
-  mkdir -p /usr/local/zend/
-  cp ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_2_x_comp/ZendOptimizer.so /usr/local/zend/
-else
-  wget -c http://soft.vpser.net/web/zend/ZendOptimizer-3.3.9-linux-glibc23-i386.tar.gz
-  tar zxvf ZendOptimizer-3.3.9-linux-glibc23-i386.tar.gz
-  mkdir -p /usr/local/zend/
-  cp ZendOptimizer-3.3.9-linux-glibc23-i386/data/5_2_x_comp/ZendOptimizer.so /usr/local/zend/
-fi
 
-cat >>/usr/local/php/etc/php.ini<<EOF
-;eaccelerator
-
-;ionCube
-
-[Zend Optimizer] 
-zend_optimizer.optimization_level=1 
-zend_extension="/usr/local/zend/ZendOptimizer.so" 
-EOF
-
- 

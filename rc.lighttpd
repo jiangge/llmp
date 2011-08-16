@@ -26,7 +26,7 @@ if [ -z "$LIGHTTPD_CONF_PATH" ]; then
 fi
 
 prog="lighttpd"
-lighttpd="/usr/local/bin/lighttpd"
+lighttpd="/usr/local/lighttpd/sbin/lighttpd"
 RETVAL=0
 
 start() {

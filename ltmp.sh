@@ -16,6 +16,7 @@ export PATH
 DOMAIN=$1
 MYSQL_PASSWORD=$2 
 
+SERVER_ROOT=/srv/www
 MYUID=`id -u`
 CWD=`pwd`
 
@@ -71,57 +72,42 @@ do
     continue
   fi
 
-  filename=`basename url`
+  furl=`echo "$url" | sed -e 's#\(.*tar\.[gb]z2\?\).*#\1#g'  `
+
+  filename=`basename $furl`
   if [ ! -f $filename ]; then
     wget -c $url
   fi
 
   tar xvf $filename
 
-  DIR=`echo "$filename" | sed -n 's/\(.*\)\.tar\.*$' `
+  DIR=`echo "$filename" | sed -e 's/\(.*\)\.tar\..*/\1/g' `
   cd $DIR 
-  chmod 0755 ./$cmdfile
-  ./$cmdfile 
+  chmod a+x $cmdfile
+  $cmdfile 
   cd $CWD
 done < $LTMPCONF
 
 echo "====================  install completed ==========================="
-#phpinfo
-cat >/home/wwwroot/phpinfo.php<<EOF
-<?
-phpinfo();
-?>
-EOF
 
-
-#prober
-cp probe.php /home/wwwroot/probe.php
-cp index.html /home/wwwroot/index.html
+cp probe.php $SERVER_ROOT/probe.php
+cp phpinfo.php $SERVER_ROOT/phpinfo.php
+cp index.html $SERVER_ROOT/index.html
 
 cp rc.lighttpd /etc/init.d/lighttpd
-chmod +x /etc/init.d/lighttpd
-
 cp rc.php /etc/init.d/php
+
+chmod +x /etc/init.d/lighttpd 
 chmod +x /etc/init.d/php
 
-#start up
-#echo "Download new lighttpd init.d file......"
 update-rc.d -f mysql defaults
 update-rc.d -f php defaults
 update-rc.d -f lighttpd defaults
 
-cd $CWD
-cp vhost.sh /root/vhost.sh
-chmod +x /root/vhost.sh
 /etc/init.d/mysql start
 /etc/init.d/php start
 /etc/init.d/lighttpd start
 
 
-echo "Install LTMP V0.7 completed! enjoy it."
-echo "========================================================================="
-echo "LTMP V0.7 for Debian VPS , Written by Jiang "
-echo "========================================================================="
-echo ""
-echo "For more information please visit http://www.ltmp.net/"
-echo ""
+echo "Install LTMP V0.1 completed! Enjoy it."
+
