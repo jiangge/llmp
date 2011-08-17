@@ -1,6 +1,9 @@
 #!/bin/sh
 
-cmake . -DCMAKE_BUILD_TYPE:STRING=MinSizeRel -DCMAKE_C_FLAGS_RELEASE:STRING='-O3 -DNDEBUG' -DWITH_SSL:STRING=system -DENABLED_LOCAL_INFILE:BOOL=ON -DWITH_EXTRA_CHARSETS:STRING=all 
+echo "mysql install: pwd=`pwd`"
+
+cmake . -DCMAKE_BUILD_TYPE:STRING=MinSizeRel -DWITH_SSL:STRING=system -DENABLED_LOCAL_INFILE:BOOL=ON -DWITH_EXTRA_CHARSETS:STRING=all 
+
 make && make install
 
 groupadd mysql
