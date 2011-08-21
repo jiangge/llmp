@@ -1,37 +1,15 @@
 #!/bin/sh
 #
-# php     Startup script for the php server
+# php-fpm     Startup script for the php 
 #
-# chkconfig: - 85 15
-# description: Lightning fast webserver with light system requirements
-#
-# processname: php
-# config: /etc/php/php.conf
-# config: /etc/sysconfig/php
-# pidfile: /var/run/php.pid
-#
-# Note: pidfile is assumed to be created
-# by php (config: server.pid-file).
-# If not, uncomment 'pidof' line.
 
-# Source function library
-#. /etc/rc.d/init.d/functions
-
-if [ -f /etc/sysconfig/php ]; then
-	. /etc/sysconfig/php
-fi
-
-if [ -z "$LIGHTTPD_CONF_PATH" ]; then
-	LIGHTTPD_CONF_PATH="/etc/php/php.conf"
-fi
-
-prog="php"
-php="/usr/local/php/bin/php"
+prog="php-fpm"
+php="/usr/local/php/sbin/php-fpm"
 RETVAL=0
 
 start() {
 	echo -n $"Starting $prog: "
-	$php -f $LIGHTTPD_CONF_PATH
+	$php 
 	RETVAL=$?
 	echo
 	[ $RETVAL -eq 0 ] && touch /var/lock/$prog
@@ -73,7 +51,8 @@ case "$1" in
 		fi
 		;;
 	reload)
-		reload
+		stop
+		start
 		;;
 	status)
 		status $php

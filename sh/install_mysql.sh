@@ -2,9 +2,15 @@
 
 echo "mysql install: pwd=`pwd`"
 
-cmake . -DCMAKE_BUILD_TYPE:STRING=MinSizeRel -DWITH_SSL:STRING=system -DENABLED_LOCAL_INFILE:BOOL=ON -DWITH_EXTRA_CHARSETS:STRING=all 
+make uninstall
+
+rm -f CMakeCache.txt 
+
+cmake . -DCMAKE_BUILD_TYPE:STRING=MinSizeRel -DWITH_SSL:STRING=system -DENABLED_LOCAL_INFILE:BOOL=ON -DWITH_EXTRA_CHARSETS:STRING=all -DWITH_EMBEDDED_SERVER:BOOL=ON 
 
 make && make install
+
+strip /usr/local/mysql/bin/*
 
 groupadd mysql
 useradd -s /bin/false -r -g mysql mysql
@@ -20,6 +26,7 @@ bin/mysqld_safe --user=mysql &
 cp support-files/mysql.server /etc/init.d/mysql
 chmod +x /etc/init.d/mysql
 bin/mysqladmin -u root password "$MYSQL_PASSWORD"
+#./bin/mysql_secure_installation
 /etc/init.d/mysql restart
 
 

@@ -41,7 +41,7 @@ do
 done
 
 TO_INSTALL='build-essential gcc g++ make autoconf automake cmake libgamin-dev gamin
-           wget cron bzip2 libzip-dev libc6-dev file rcconf flex 
+           wget cron bzip2 libzip-dev libc6-dev file rcconf flex libreadline-dev
            vim bison m4 gawk less make cpp binutils diffutils    
            unzip tar bzip2 libbz2-dev libncurses5 libncurses5-dev     
            libtool libevent-dev libpcre3 libpcre3-dev libpcrecpp0     
@@ -92,21 +92,21 @@ done < $LTMPCONF
 echo "====================  install completed ==========================="
 
 cp $APP/probe.php $SERVER_ROOT/probe.php
-cp $APP/phpinfo.php $SERVER_ROOT/phpinfo.php
+cp $APP/php.php $SERVER_ROOT/php.php
 cp $APP/index.html $SERVER_ROOT/index.html
 
 cp $RC/rc.lighttpd /etc/init.d/lighttpd
-cp $RC/rc.php /etc/init.d/php
+cp $RC/rc.php-fpm /etc/init.d/php-fpm
 
 chmod +x /etc/init.d/lighttpd 
 chmod +x /etc/init.d/php
 
 update-rc.d -f mysql defaults
-update-rc.d -f php defaults
+update-rc.d -f php-fpm defaults
 update-rc.d -f lighttpd defaults
 
 /etc/init.d/mysql start
-/etc/init.d/php start
+/etc/init.d/php-fpm start
 /etc/init.d/lighttpd start
 
 
