@@ -6,7 +6,7 @@ make uninstall
 
 rm -f CMakeCache.txt 
 
-cmake . -DCMAKE_BUILD_TYPE:STRING=MinSizeRel -DWITH_SSL:STRING=system -DENABLED_LOCAL_INFILE:BOOL=ON -DWITH_EXTRA_CHARSETS:STRING=all -DWITH_EMBEDDED_SERVER:BOOL=ON 
+cmake . -DWITH_SSL:STRING=system -DENABLED_LOCAL_INFILE:BOOL=ON -DWITH_EXTRA_CHARSETS:STRING=all 
 
 make && make install
 
@@ -27,7 +27,7 @@ cp support-files/mysql.server /etc/init.d/mysql
 chmod +x /etc/init.d/mysql
 bin/mysqladmin -u root password "$MYSQL_PASSWORD"
 #./bin/mysql_secure_installation
-/etc/init.d/mysql restart
+/etc/init.d/mysql stop
 
 
 
