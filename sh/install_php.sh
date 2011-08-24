@@ -9,7 +9,7 @@ useradd -s /bin/false -r -g nobody nobody
 make uninstall
 
 ./buildconf --force
-./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/local/mysql/bin/mysql_config --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --with-curlwrappers --enable-mbregex --enable-fpm --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --with-pdo-mysql=/usr/local/mysql --with-readline --with-pcre-dir --without-sqlite3 --without-cdb --without-pdo-sqlite --without-sqlite 
+./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/local/mysql/bin/mysql_config --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --with-curlwrappers --enable-mbregex --enable-fpm --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --with-pdo-mysql=/usr/local/mysql --with-readline --with-pcre-dir --without-sqlite3 --without-cdb --without-pdo-sqlite --without-sqlite --disable-fileinfo
 make 
 make install
 
@@ -53,7 +53,8 @@ extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/"
 extension = "memcache.so"
 EOF
 
-sed -i 's:^listen:listen = /tmp/php-fastcgi.socket:g' /usr/local/php/etc/php-fpm.conf
-
-
+sed -i 's:^listen.*$:listen = /tmp/php-fastcgi.socket:g' /usr/local/php/etc/php-fpm.conf
+sed -i 's:^;\(pm.start_servers\).*$:\1 = 2 :g' /usr/local/php/etc/php-fpm.conf
+sed -i 's:^;\(pm.min_spare_servers\).*$:\1 = 1 :g' /usr/local/php/etc/php-fpm.conf
+sed -i 's:^;\(pm.max_spare_servers\).*$:\1 = 2 :g' /usr/local/php/etc/php-fpm.conf 
 
