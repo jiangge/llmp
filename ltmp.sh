@@ -35,10 +35,7 @@ REMOVED='libmysqlclient15off libmysqlclient15-dev libmysqlclient-dev mysql-commo
         apache2.2-common lighttpd php apache2-mpm-worker        
         mysql-client mysql-server lighttpd' 
 
-for PACK in `echo $REMOVED`
-do
-  apt-get remove -y $PACK
-done
+apt-get remove -y `echo $REMOVED`
 
 TO_INSTALL='build-essential gcc g++ make autoconf automake cmake libgamin-dev gamin
            wget cron bzip2 libzip-dev libc6-dev file rcconf flex libreadline-dev
@@ -56,12 +53,9 @@ TO_INSTALL='build-essential gcc g++ make autoconf automake cmake libgamin-dev ga
            libfreetype6-dev libssl-dev libcurl4-openssl-dev 
            libcurl4-gnutls-dev mcrypt memcached libev-dev libev3'
 
-for packages in `echo $TO_INSTALL`
-do 
-  apt-get install -y "$packages" --force-yes
-  apt-get -fy install
-  apt-get -y autoremove 
-done
+apt-get install -y `echo $TO_INSTALL` --force-yes
+apt-get -fy install
+apt-get -y autoremove 
 
 
 if [ ! -f $LTMPCONF ]; then

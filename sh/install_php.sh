@@ -7,9 +7,8 @@ groupadd nobody
 useradd -s /bin/false -r -g nobody nobody
 
 make uninstall
-
 ./buildconf --force
-./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/local/mysql/bin/mysql_config --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --with-curlwrappers --enable-mbregex --enable-fpm --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --with-pdo-mysql=/usr/local/mysql --with-readline --with-pcre-dir --without-sqlite3 --without-cdb --without-pdo-sqlite --without-sqlite --disable-fileinfo
+./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/local/mysql/bin/mysql_config --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-inline-optimization --with-curl --with-curlwrappers --enable-mbregex --enable-fpm --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --with-pdo-mysql=/usr/local/mysql --with-readline --with-pcre-dir --without-sqlite3 --without-cdb --without-pdo-sqlite --without-sqlite --disable-fileinfo --disable-debug --disable-rpath --with-bz2 --without-gdbm --disable-dba --without-sqlite  --disable-phar --without-pspell --disable-wddx --disable-sysvmsg --disable-sysvshm --disable-sysvsem 
 make 
 make install
 
@@ -44,17 +43,23 @@ cd memcache-3.0.5/
 make && make install 
 cd ../ 
 
+PHPINI=/usr/local/php/etc/php.ini
 
-sed -i 's/cgi\.fix_pathinfo=.*$/cgi\.fix_pathinfo=1/g' /usr/local/php/etc/php.ini
-sed -i 's:^zend.*xcache\.so:zend_extension = /usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/xcache.so:g' /usr/local/php/etc/php.ini
+sed -i 's/cgi\.fix_pathinfo=.*$/cgi\.fix_pathinfo=1/g' $PHPINI
+sed -i 's:^zend.*xcache\.so:zend_extension = /usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/xcache.so:g' $PHPINI
+sed -i 's:^\(xcache\.size\).*$:\1 = 10M :g' $PHPINI
 
-cat  >> /usr/local/php/etc/php.ini <<EOF 
+cat  >> $PHPINI <<EOF 
 extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/"
 extension = "memcache.so"
 EOF
 
-sed -i 's:^listen.*$:listen = /tmp/php-fastcgi.socket:g' /usr/local/php/etc/php-fpm.conf
-sed -i 's:^;\(pm.start_servers\).*$:\1 = 2 :g' /usr/local/php/etc/php-fpm.conf
-sed -i 's:^;\(pm.min_spare_servers\).*$:\1 = 1 :g' /usr/local/php/etc/php-fpm.conf
-sed -i 's:^;\(pm.max_spare_servers\).*$:\1 = 2 :g' /usr/local/php/etc/php-fpm.conf 
+FPMCONF=/usr/local/php/etc/php-fpm.conf
+
+sed -i 's:^listen.*$:listen = /tmp/php-fastcgi.socket:g' $FPMCONF
+sed -i 's:^;\(pm.max_children\).*$:\1 = 10 :g' $FPMCONF
+sed -i 's:^;\(pm.start_servers\).*$:\1 = 1 :g' $FPMCONF
+sed -i 's:^;\(pm.min_spare_servers\).*$:\1 = 1 :g' $FPMCONF
+sed -i 's:^;\(pm.max_spare_servers\).*$:\1 = 9 :g' $FPMCONF
+sed -i 's:^;\(pm.max_requests\).*$:\1 = 500 :g' $FPMCONF
 
