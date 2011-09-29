@@ -1,14 +1,33 @@
 #!/bin/sh
 
+# Copyright (c) 2011, Jiang Jilin. All rights reserved.
+#
+# This file is part of LTMP.
+# 
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
+
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 DOMAIN=$1
 MYSQL_PASSWORD=$2 
+export DOMAIN
+export MYSQL_PASSWORD
 
 SERVER_ROOT=/srv/www
-LTMPCONF=ltmp.conf
+LTMPCONF=conf/ltmp.conf
 MYUID=`id -u`
 CWD=`pwd`
 RC=$CWD/rc
@@ -17,7 +36,7 @@ APP=$CWD/app
 
 # BEGIN
 
-if [ $# -lt 2 ]; then 
+if [ $# -lt 3 ]; then 
   echo "Usage: $0 <yourdomain.com> <mysql_password>"
   exit 1
 fi
@@ -79,7 +98,7 @@ do
 
   DIR=`echo "$filename" | sed -e 's/\(.*\)\.tar\..*/\1/g' `
   cd $DIR 
-  ../sh/$cmdfile 
+  [ -f ../sh/$cmdfile ] && ../sh/$cmdfile
   cd $CWD
 done < $LTMPCONF
 
@@ -100,9 +119,13 @@ update-rc.d -f php-fpm defaults
 update-rc.d -f lighttpd defaults
 
 /etc/init.d/mysql start
+./app/mysql_secure_installation $MYSQL_PASSWORD
+/etc/init.d/mysql stop
+
+/etc/init.d/mysql start
 /etc/init.d/php-fpm start
 /etc/init.d/lighttpd start
 
 
-echo "Install LTMP V0.1 completed! Enjoy it."
+echo "POWERED BY LTMP.NET"
 
