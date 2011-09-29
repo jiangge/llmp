@@ -2,7 +2,7 @@
 
 INFOMATION
 -------------------------
-Why do you recreate the weel called the LTMP?
+Why do you recreate the wheel called the LTMP?
 Smaller, faster, more efficently.   
 
 
@@ -10,7 +10,7 @@ INSTALL
 ------------------------- 
 gunzip -cd ltmp.tar.gz | tar xvf -
 cd ltmp
-./ltmp.sh <domain> <mysql_password>
+./ltmp.sh <domain> <mysql_password for root>
 
 
 LICENCE
