@@ -5,6 +5,9 @@ INFOMATION
 Why do you recreate the wheel called the LTMP?
 Smaller, faster, more efficently.   
 
+What distributions does it support? 
+*Only* Debian and Ubuntu supported currently.
+
 
 INSTALL
 ------------------------- 
