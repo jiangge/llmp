@@ -18,7 +18,7 @@
 
 config=".my.cnf.$$"
 command=".mysql.$$"
-mysql_client=""
+mysql_client="/usr/local/mysql/bin/mysql"
 
 trap "interrupt" 2
 

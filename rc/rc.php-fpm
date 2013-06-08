@@ -36,7 +36,7 @@ start() {
 
 stop() {
 	echo -n $"Stopping $prog: "
-	killall $php
+	killall $prog
 	RETVAL=$?
 	echo
 	[ $RETVAL -eq 0 ] && rm -f /var/lock/$prog

@@ -35,7 +35,7 @@ chgrp -R mysql .
 ./scripts/mysql_install_db --user=mysql
 chown -R root .
 chown -R mysql data
-mem=`free -m|grep Mem |awk '{ print $2 }'
+mem=`free -m|grep Mem |awk '{ print $2 }' `
 
 if [ $mem -le 128 ]; then
   cp support-files/my-small.cnf /etc/my.cnf 
@@ -65,7 +65,6 @@ else
 fi 
 
 
-#bin/mysqld_safe --user=mysql &
 cp support-files/mysql.server /etc/init.d/mysql
 chmod +x /etc/init.d/mysql
 

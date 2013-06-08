@@ -45,7 +45,7 @@ strip /usr/local/lighttpd/sbin/*  /usr/local/lighttpd/lib/*
 
 cp -r doc/config/* /etc/lighttpd/ 
 
-sed -i "s:default\.example\.com:$DOMAIN/g" /etc/lighttpd/conf.d/simple_vhost.conf 
+sed -i "s:default\.example\.com:$DOMAIN:g" /etc/lighttpd/conf.d/simple_vhost.conf 
 sed -i "s:"mod_access",:"mod_access","mod_accesslog":g" /etc/lighttpd/modules.conf
 cat >> /etc/lighttpd/modules.conf <<EOF  
 include "conf.d/compress.conf"

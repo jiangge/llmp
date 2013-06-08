@@ -26,7 +26,7 @@ MYSQL_PASSWORD=$2
 export DOMAIN
 export MYSQL_PASSWORD
 
-SERVER_ROOT=/srv/www
+SERVER_ROOT=/srv/www/vhosts/$DOMAIN/htdocs
 LTMPCONF=conf/ltmp.conf
 MYUID=`id -u`
 CWD=`pwd`
@@ -36,28 +36,32 @@ APP=$CWD/app
 
 # BEGIN
 
-if [ $# -lt 3 ]; then 
+if [ $# -lt 2 ]; then 
   echo "Usage: $0 <yourdomain.com> <mysql_password>"
   exit 1
 fi
 
 if [ $MYUID != "0" ]; then
-    echo "Capton: No root, no running"
+    echo "Captain: No root, no running"
     exit 1
 fi
 
 
-apt-get update
-
 REMOVED='libmysqlclient15off libmysqlclient15-dev libmysqlclient-dev mysql-common 
-        apache2 apache2-doc apache2-mpm-prefork apache2-utils   
-        apache2.2-common lighttpd php apache2-mpm-worker        
-        mysql-client mysql-server lighttpd' 
+        apache2 apache2-doc apache2-mpm-prefork apache2-utils  apache2.2-bin
+        apache2.2-common lighttpd php-fpm apache2-mpm-worker        
+        mysql-client mysql-server lighttpd libcurl-dev' 
 
-apt-get remove -y `echo $REMOVED`
 
-TO_INSTALL='build-essential gcc g++ make autoconf automake cmake libgamin-dev gamin
-           wget cron bzip2 libzip-dev libc6-dev file rcconf flex libreadline-dev
+
+#aptitude install -y apt-spy
+#cp /etc/apt/sources.list /etc/apt/sources.list.bak
+#apt-spy update
+#apt-spy -d stable -a america -t 5 
+#cp /etc/apt/sources.list.d/apt-spy.list /etc/apt/sources.list
+
+TO_INSTALL='build-essential gcc g++ make autoconf automake cmake libgamin-dev gamin  
+           wget cron bzip2 libzip-dev libc6-dev file rcconf flex libreadline-dev  
            vim bison m4 gawk less make cpp binutils diffutils    
            unzip tar bzip2 libbz2-dev libncurses5 libncurses5-dev     
            libtool libevent-dev libpcre3 libpcre3-dev libpcrecpp0     
@@ -69,13 +73,30 @@ TO_INSTALL='build-essential gcc g++ make autoconf automake cmake libgamin-dev ga
            libcurl3 libmhash2 libmhash-dev libpq-dev libpq5 gettext   
            libncurses5-dev  libjpeg-dev            
            libpng12-dev libxml2-dev zlib1g-dev libfreetype6           
-           libfreetype6-dev libssl-dev libcurl4-openssl-dev 
+           libfreetype6-dev libssl-dev libcurl4-openssl-dev  
            libcurl4-gnutls-dev mcrypt memcached libev-dev libev3'
 
-apt-get install -y `echo $TO_INSTALL` --force-yes
-apt-get -fy install
-apt-get -y autoremove 
+which aptitude
+if [ $? -eq 0 ]; then 
+  aptitude remove -y `echo $REMOVED` 
+  aptitude safe-upgrade -y
+  aptitude update -y
 
+  aptitude install -y `echo $TO_INSTALL` 
+  aptitude -fy install
+  aptitude -y autoremove 
+else
+  which yum
+  if [ $? -eq 0 ]; then 
+    yum -y remove `echo $REMOVED` 
+    #yum -y install `echo $TO_INSTALL` 
+    for packages in patch make gcc gcc-c++ gcc-g77 flex bison file libtool libtool-libs autoconf kernel-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel gd gd-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel vim-minimal nano fonts-chinese gettext gettext-devel ncurses-devel gmp-devel pspell-devel unzip libmcrypt libmcrypt-devel readline readline-devel pcre-devel gamin gamin-devel;
+    do yum -y install $packages; done 
+  else
+    echo "The OS not supported"
+    exit 1
+  fi
+fi 
 
 if [ ! -f $LTMPCONF ]; then
   wget -c http://ltmp.net/$LTMPCONF
@@ -104,7 +125,7 @@ done < $LTMPCONF
 
 echo "====================  install completed ==========================="
 
-cp $APP/probe.php $SERVER_ROOT/probe.php
+#cp $APP/probe.php $SERVER_ROOT/probe.php
 cp $APP/php.php $SERVER_ROOT/php.php
 cp $APP/index.html $SERVER_ROOT/index.html
 
@@ -119,12 +140,17 @@ update-rc.d -f php-fpm defaults
 update-rc.d -f lighttpd defaults
 
 /etc/init.d/mysql start
+cd $CWD
 ./app/mysql_secure_installation $MYSQL_PASSWORD
 /etc/init.d/mysql stop
 
 /etc/init.d/mysql start
 /etc/init.d/php-fpm start
 /etc/init.d/lighttpd start
+
+cat >> ~/.profile <<EOF
+export PATH=/usr/local/mysql/bin:/usr/local/mysql/sbin/:$PATH
+EOF
 
 
 echo "POWERED BY LTMP.NET"

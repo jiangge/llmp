@@ -18,9 +18,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.  
 
 
-export PHP_AUTOCONF=/usr/local/autoconf-2.13/bin/autoconf
-export PHP_AUTOHEADER=/usr/local/autoconf-2.13/bin/autoheader 
-
+#export PHP_AUTOCONF=/usr/local/autoconf-2.13/bin/autoconf
+#export PHP_AUTOHEADER=/usr/local/autoconf-2.13/bin/autoheader 
 groupadd nobody
 useradd -s /bin/false -r -g nobody nobody
 
@@ -34,8 +33,8 @@ cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
 
 strip /usr/local/php/bin/* /usr/local/php/sbin/*
 
-if [ ! -f xcache-1.3.2.tar.bz2 ]; then 
-  wget -c http://xcache.lighttpd.net/pub/Releases/1.3.2/xcache-1.3.2.tar.bz2
+if [ ! -f xcache-2.0.1.tar.bz2 ]; then 
+  wget -c http://xcache.lighttpd.net/pub/Releases/2.0.1/xcache-2.0.1.tar.bz2
 fi
 
 # xcache
@@ -60,16 +59,16 @@ cd memcache-3.0.5/
 make && make install 
 cd ../ 
 
-strip /usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/*
+strip /usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/*
 
 PHPINI=/usr/local/php/etc/php.ini
 
 sed -i 's/cgi\.fix_pathinfo=.*$/cgi\.fix_pathinfo=1/g' $PHPINI
-sed -i 's:^zend.*xcache\.so:zend_extension = /usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/xcache.so:g' $PHPINI
-sed -i 's:^\(xcache\.size\).*$:\1 = 10M :g' $PHPINI
+sed -i 's:^zend.*xcache\.so:zend_extension = /usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/xcache.so:g' $PHPINI
+sed -i 's:^\(xcache\.size\).*$:\1 = 4M :g' $PHPINI
 
 cat  >> $PHPINI <<EOF 
-extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/"
+extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/"
 extension = "memcache.so"
 EOF
 
