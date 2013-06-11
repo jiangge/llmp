@@ -32,6 +32,7 @@ cp php.ini-production /usr/local/php/etc/php.ini
 cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
 
 strip /usr/local/php/bin/* /usr/local/php/sbin/*
+cd ..
 
 if [ ! -f xcache-2.0.1.tar.bz2 ]; then 
   wget -c http://xcache.lighttpd.net/pub/Releases/2.0.1/xcache-2.0.1.tar.bz2
