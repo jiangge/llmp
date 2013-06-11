@@ -39,8 +39,8 @@ if [ ! -f xcache-2.0.1.tar.bz2 ]; then
 fi
 
 # xcache
-tar xvf xcache-1.3.2.tar.bz2
-cd xcache-1.3.2
+tar xvf xcache-2.0.1.tar.bz2
+cd xcache-2.0.1.tar.bz2
 /usr/local/php/bin/phpize
 ./configure --enable-xcache --with-php-config=/usr/local/php/bin/php-config
 make && make install 
