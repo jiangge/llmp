@@ -40,7 +40,7 @@ fi
 
 # xcache
 tar xvf xcache-2.0.1.tar.bz2
-cd xcache-2.0.1.tar.bz2
+cd xcache-2.0.1
 /usr/local/php/bin/phpize
 ./configure --enable-xcache --with-php-config=/usr/local/php/bin/php-config
 make && make install 
