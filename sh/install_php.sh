@@ -34,13 +34,13 @@ cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
 strip /usr/local/php/bin/* /usr/local/php/sbin/*
 cd ..
 
-if [ ! -f xcache-2.0.1.tar.bz2 ]; then 
-  wget -c http://xcache.lighttpd.net/pub/Releases/2.0.1/xcache-2.0.1.tar.bz2
+if [ ! -f xcache-3.0.1.tar.bz2 ]; then 
+  wget -c http://xcache.lighttpd.net/pub/Releases/3.0.1/xcache-3.0.1.tar.bz2
 fi
 
 # xcache
-tar xvf xcache-2.0.1.tar.bz2
-cd xcache-2.0.1
+tar xvf xcache-3.0.1.tar.bz2
+cd xcache-3.0.1
 /usr/local/php/bin/phpize
 ./configure --enable-xcache --with-php-config=/usr/local/php/bin/php-config
 make && make install 
@@ -65,8 +65,8 @@ strip /usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/*
 PHPINI=/usr/local/php/etc/php.ini
 
 sed -i 's/cgi\.fix_pathinfo=.*$/cgi\.fix_pathinfo=1/g' $PHPINI
-sed -i 's:^zend.*xcache\.so:zend_extension = /usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/xcache.so:g' $PHPINI
-sed -i 's:^\(xcache\.size\).*$:\1 = 4M :g' $PHPINI
+#sed -i 's:^zend.*xcache\.so:zend_extension = /usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/xcache.so:g' $PHPINI
+sed -i 's:^\(xcache\.size\).*$:\1 = 32M :g' $PHPINI
 
 cat  >> $PHPINI <<EOF 
 extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/"
