@@ -178,6 +178,8 @@ remove_remote_root() {
 
 remove_test_database() {
     echo " - Dropping test database..."
+    #Jiang Jilin
+    rm -f /usr/local/mysql/data/test/.empty
     do_query "DROP DATABASE test;"
     if [ $? -eq 0 ]; then
 	echo " ... Success!"

@@ -47,7 +47,7 @@ if [ $MYUID != "0" ]; then
 fi
 
 
-REMOVED='libmysqlclient15off libmysqlclient15-dev libmysqlclient-dev mysql-common 
+REMOVED='libmysqlclient15 libmysqlclient15-dev libmysqlclient-dev mysql-common 
         apache2 apache2-doc apache2-mpm-prefork apache2-utils  apache2.2-bin
         apache2.2-common lighttpd php-fpm apache2-mpm-worker        
         mysql-client mysql-server lighttpd libcurl-dev' 
@@ -133,7 +133,7 @@ cp $RC/rc.lighttpd /etc/init.d/lighttpd
 cp $RC/rc.php-fpm /etc/init.d/php-fpm
 
 chmod +x /etc/init.d/lighttpd 
-chmod +x /etc/init.d/php
+chmod +x /etc/init.d/php-fpm
 
 update-rc.d -f mysql defaults
 update-rc.d -f php-fpm defaults
