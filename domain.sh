@@ -35,15 +35,10 @@ APP=$CWD/app
 LIGHTTPD_CONF=/etc/lighttpd/lighttpd.conf
 WEB_ROOT_DIR=/srv/www/vhosts
 
-if [ $# -lt 2 ]; then 
-  echo "Usage: $0 <add/rm> <domain>"
+usage() {
+  echo "Usage: $1 <add | rm> <domain>"
   exit 1
-fi
-
-if [ $MYUID != "0" ]; then
-    echo "Captain: No root, no running"
-    exit 1
-fi
+}
 
 add() {
     mkdir -p $WEB_ROOT_DIR/$DOMAIN 
@@ -59,6 +54,15 @@ del() {
   sed -i "/^\$HTTP\[\"host\"\] =~ .*$DOMAIN\"/,/\#END/c\ " $LIGHTTPD_CONF
 } 
 
+if [ $# -lt 2 ]; then 
+  usage $0
+fi
+
+if [ $MYUID != "0" ]; then
+    echo "Captain: No root, no running"
+    exit 1
+fi 
+
 case $OP in
   "add")
     del
@@ -68,8 +72,7 @@ case $OP in
     del
     ;;
   *)
-    echo "Usage: $0 <add/rm> <domain>"
-    exit 1
+    usage $0
     ;;
 esac
 
