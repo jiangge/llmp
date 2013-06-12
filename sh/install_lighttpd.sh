@@ -45,12 +45,13 @@ strip /usr/local/lighttpd/sbin/*  /usr/local/lighttpd/lib/*
 
 cp -r doc/config/* /etc/lighttpd/ 
 
-sed -i "s:default\.example\.com:$DOMAIN:g" /etc/lighttpd/conf.d/simple_vhost.conf 
-sed -i "s:"mod_access",:"mod_access","mod_accesslog":g" /etc/lighttpd/modules.conf
+#sed -i "s:default\.example\.com:$DOMAIN:g" /etc/lighttpd/conf.d/simple_vhost.conf 
+sed -i 's:^\(server\.document-root\).*$:\1 = "/srv/www/vhosts/$DOMAIN/htdocs":g' /etc/lighttpd/lighttpd.conf
+sed -i "s:"mod_access",:"mod_access","mod_accesslog","mod_rewrite":g" /etc/lighttpd/modules.conf
 cat >> /etc/lighttpd/modules.conf <<EOF  
 include "conf.d/compress.conf"
 include "conf.d/status.conf"
-include "conf.d/simple_vhost.conf"
+#include "conf.d/simple_vhost.conf"
 #include "conf.d/trigger_b4_dl.conf"
 include "conf.d/fastcgi.conf"
 include "conf.d/secdownload.conf"
