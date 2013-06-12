@@ -60,7 +60,7 @@ REMOVED='libmysqlclient15 libmysqlclient15-dev libmysqlclient-dev mysql-common
 #apt-spy -d stable -a america -t 5 
 #cp /etc/apt/sources.list.d/apt-spy.list /etc/apt/sources.list
 
-TO_INSTALL='build-essential gcc g++ make autoconf automake cmake libgamin-dev gamin  
+TO_INSTALL='build-essential psmisc gcc g++ make autoconf automake cmake libgamin-dev gamin  
            wget cron bzip2 libzip-dev libc6-dev file rcconf flex libreadline-dev  
            vim bison m4 gawk less make cpp binutils diffutils    
            unzip tar bzip2 libbz2-dev libncurses5 libncurses5-dev     

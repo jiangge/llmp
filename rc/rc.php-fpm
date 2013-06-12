@@ -36,8 +36,8 @@ start() {
 
 stop() {
 	echo -n $"Stopping $prog: "
-	#killall $prog
-        ps aux|grep $prog |grep -v grep |awk '{print $2}' |xargs kill
+	killall $prog
+        [ ! $RETVAL -eq 0 ] && ps aux|grep $prog |grep -v grep |awk '{print $2}' |xargs kill
 	RETVAL=$?
 	echo
 	[ $RETVAL -eq 0 ] && rm -f /var/lock/$prog
@@ -46,8 +46,8 @@ stop() {
 
 reload() {
 	echo -n $"Reloading $prog: "
-	killall $php -HUP
-        ps aux|grep $prog |grep -v grep |awk '{print $2}' |xargs kill -HUP
+	killall $prog -HUP
+        [ ! $RETVAL -eq 0 ] && ps aux|grep $prog |grep -v grep |awk '{print $2}' |xargs kill -HUP
 	RETVAL=$?
 	echo
 	return $RETVAL
