@@ -49,14 +49,15 @@ case $OP in
   "add")
     $0 rm $DOMAIN 
     mkdir -p $WEB_ROOT_DIR/$DOMAIN 
-    cat  >> $LIGHTTPD_CONF <<EOE 
-    \$HTTP["host"] =~ "(^|www\.)$DOMAIN" {
-      server.document-root = "$WEB_ROOT_DIR/$DOMAIN" 
-    }
-    EOE
-    ;; 
+    cat  >> $LIGHTTPD_CONF <<EOF 
+\$HTTP["host"] =~ "(^|www\.)$DOMAIN" {
+server.document-root = "$WEB_ROOT_DIR/$DOMAIN" 
+}
+#END
+EOF
+    ;;
   "rm")
-    sed -i "s:^\$HTTP\["host"] =~ "(^|www\.)$DOMAIN".*\#END\):g" $LIGHTTPD_CONF
+    sed -i "/^\$HTTP\[\"host\"\] =~ .*$DOMAIN\"/,/\#END/c\ " $LIGHTTPD_CONF
     ;;
   *)
     echo "Usage: $0 <add/rm> <domain>"
@@ -65,4 +66,5 @@ case $OP in
 esac
 
 #/etc/init.d/lighttpd reload
-#echo "OK" 
+echo "OK" 
+
