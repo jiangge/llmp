@@ -45,9 +45,7 @@ if [ $MYUID != "0" ]; then
     exit 1
 fi
 
-case $OP in
-  "add")
-    $0 rm $DOMAIN 
+add() {
     mkdir -p $WEB_ROOT_DIR/$DOMAIN 
     cat  >> $LIGHTTPD_CONF <<EOF 
 \$HTTP["host"] =~ "(^|www\.)$DOMAIN" {
@@ -55,9 +53,19 @@ server.document-root = "$WEB_ROOT_DIR/$DOMAIN"
 }
 #END
 EOF
+}
+
+del() {
+  sed -i "/^\$HTTP\[\"host\"\] =~ .*$DOMAIN\"/,/\#END/c\ " $LIGHTTPD_CONF
+} 
+
+case $OP in
+  "add")
+    del
+    add
     ;;
   "rm")
-    sed -i "/^\$HTTP\[\"host\"\] =~ .*$DOMAIN\"/,/\#END/c\ " $LIGHTTPD_CONF
+    del
     ;;
   *)
     echo "Usage: $0 <add/rm> <domain>"
@@ -65,6 +73,7 @@ EOF
     ;;
 esac
 
-#/etc/init.d/lighttpd reload
+cp -n app/index.* app/php.php $WEB_ROOT_DIR/$DOMAIN
+/etc/init.d/lighttpd reload
 echo "OK" 
 

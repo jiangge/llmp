@@ -71,7 +71,7 @@ stop() {
 reload() {
 	echo -n $"Reloading $prog: "
 	#killall $lighttpd -HUP
-        ps aux|grep php |grep -v grep |awk '{print $2}' |xargs kill -HUP
+        ps aux|grep $prog |grep -v grep |awk '{print $2}' |xargs kill -HUP
 	RETVAL=$?
 	echo
 	return $RETVAL
