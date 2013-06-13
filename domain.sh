@@ -51,7 +51,7 @@ EOF
 }
 
 del() {
-  sed -i "/^\$HTTP\[\"host\"\] =~ .*$DOMAIN\"/,/\#END/c\ " $LIGHTTPD_CONF
+  sed -i "/^\$HTTP\[\"host\"\] =~ .*$DOMAIN\"/,/\#END/d" $LIGHTTPD_CONF
 } 
 
 if [ $# -lt 2 ]; then 
