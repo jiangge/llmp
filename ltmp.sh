@@ -125,6 +125,12 @@ done < $LTMPCONF
 
 echo "====================  install completed ==========================="
 
+cat >> ~/.profile <<EOF
+export PATH=/usr/local/mysql/bin:/usr/local/mysql/sbin/:$PATH
+EOF
+
+. ~/.profile
+
 #cp $APP/probe.php $SERVER_ROOT/probe.php
 cp $APP/php.php $SERVER_ROOT/php.php
 cp $APP/index.html $SERVER_ROOT/index.html
@@ -142,15 +148,13 @@ update-rc.d -f lighttpd defaults
 /etc/init.d/mysql start
 cd $CWD
 ./app/mysql_secure_installation $MYSQL_PASSWORD
+#mysqladmin -u root password $MYSQL_PASSWORD
 /etc/init.d/mysql stop
 
 /etc/init.d/mysql start
 /etc/init.d/php-fpm start
 /etc/init.d/lighttpd start
 
-cat >> ~/.profile <<EOF
-export PATH=/usr/local/mysql/bin:/usr/local/mysql/sbin/:$PATH
-EOF
 
 
 echo "POWERED BY LTMP.NET"

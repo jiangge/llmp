@@ -22,7 +22,8 @@ mysql_client="/usr/local/mysql/bin/mysql"
 
 trap "interrupt" 2
 
-rootpass=""
+#rootpass=""
+rootpass=$1
 echo_n=
 echo_c=
 
@@ -99,12 +100,12 @@ get_root_password() {
 	#read password
 	#echo
 	#stty echo
-	if [ "x$password" = "x" ]; then
+	if [ "x$rootpass" = "x" ]; then
 	    hadpass=0
 	else
 	    hadpass=1
 	fi
-	rootpass=$password
+	#rootpass=$password
 	make_config
 	do_query ""
 	status=$?
@@ -227,7 +228,7 @@ cleanup() {
 # The actual script starts here
 
 prepare
-find_mysql_client
+#find_mysql_client
 set_echo_compat
 
 echo
