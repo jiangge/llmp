@@ -50,7 +50,7 @@ fi
 REMOVED='libmysqlclient15 libmysqlclient15-dev libmysqlclient-dev mysql-common 
         apache2 apache2-doc apache2-mpm-prefork apache2-utils  apache2.2-bin
         apache2.2-common lighttpd php-fpm apache2-mpm-worker        
-        mysql-client mysql-server lighttpd libcurl-dev' 
+        mysql-client mysql-server lighttpd libcurl-dev acpi acpid acpi-support-base' 
 
 
 
@@ -130,6 +130,13 @@ export PATH=/usr/local/mysql/bin:/usr/local/mysql/sbin/:$PATH
 EOF
 
 . ~/.profile
+
+sed -i 's!^2\(:23:respawn:/sbin/getty 38400 tty2\)!#2\1!g' /etc/inittab
+sed -i 's!^3\(:23:respawn:/sbin/getty 38400 tty3\)!#3\1!g' /etc/inittab
+sed -i 's!^4\(:23:respawn:/sbin/getty 38400 tty4\)!#4\1!g' /etc/inittab
+sed -i 's!^5\(:23:respawn:/sbin/getty 38400 tty5\)!#5\1!g' /etc/inittab
+sed -i 's!^6\(:23:respawn:/sbin/getty 38400 tty6\)!#6\1!g' /etc/inittab
+init q
 
 #cp $APP/probe.php $SERVER_ROOT/probe.php
 cp $APP/php.php $SERVER_ROOT/php.php
