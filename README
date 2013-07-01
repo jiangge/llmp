@@ -15,6 +15,10 @@ gunzip -cd ltmp.tar.gz | tar xvf -
 cd ltmp
 ./ltmp.sh <domain> <mysql_password for root>
 
+DOMAINS
+------------------------
+./domain.sh <add | rm> <domain>
+
 
 LICENCE
 ------------------------- 
@@ -24,4 +28,4 @@ of the GNU General Public License terms under which you can copy the files.
 
 HELP
 ------------------------ 
-Please visit at http://ltmp.net for more infomation.
+Please visit at http://chuchuang.org/ltmp for more infomation.

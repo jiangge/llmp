@@ -99,7 +99,7 @@ else
 fi 
 
 if [ ! -f $LTMPCONF ]; then
-  wget -c http://ltmp.net/$LTMPCONF
+  wget -c http://chuchuang.org/ltmp/$LTMPCONF
 fi
 
 while read url cmdfile
@@ -154,8 +154,8 @@ update-rc.d -f lighttpd defaults
 
 /etc/init.d/mysql start
 cd $CWD
+mysqladmin -u root password $MYSQL_PASSWORD
 ./app/mysql_secure_installation $MYSQL_PASSWORD
-#mysqladmin -u root password $MYSQL_PASSWORD
 /etc/init.d/mysql stop
 
 /etc/init.d/mysql start

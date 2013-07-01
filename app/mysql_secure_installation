@@ -221,7 +221,7 @@ interrupt() {
 
 cleanup() {
     echo "Cleaning up..."
-    rm -f $config $command
+    rm -f ./$config ./$command
 }
 
 

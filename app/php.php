@@ -530,7 +530,7 @@ if ($_POST['act'] == 'EmailTest') {
 <br>
 <br>
 <div id="footer">
-&copy; <?php echo date("Y",time());?>  Powered by <a HREF="http://ltmp.net" target="_blank">ltmp.net</a>  
+&copy; <?php echo date("Y",time());?>  Powered by <a HREF="http://chuchuang.org/ltmp" target="_blank">chuchuang.org</a>  
 <?php $run_time = sprintf('%0.4f', get_time() - $time_start);?> <br>
 Processed in <?php echo $run_time?>  seconds. <?php echo memory_cost();?>  memory cost.
 </div>
