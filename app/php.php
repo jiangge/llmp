@@ -2,7 +2,7 @@
 
 # Copyright (c) 2011, Jiang Jilin. All rights reserved.
 #
-# This file is *NOT* Part of LTMP.
+# This file is *NOT* Part of LLMP.
 # 
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -300,7 +300,7 @@ for ($i = 2; $i < count($strs); $i++ )
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>LTMP.NET INSPECTOR</title>
+<title>LLMP.ORG INSPECTOR</title>
 <style>
 </style>
 </head>
@@ -530,7 +530,7 @@ if ($_POST['act'] == 'EmailTest') {
 <br>
 <br>
 <div id="footer">
-&copy; <?php echo date("Y",time());?>  Powered by <a HREF="http://chuchuang.org/ltmp" target="_blank">chuchuang.org</a>  
+&copy; <?php echo date("Y",time());?>  Powered by <a HREF="http://llmp.org/" target="_blank">llmp.org</a>  
 <?php $run_time = sprintf('%0.4f', get_time() - $time_start);?> <br>
 Processed in <?php echo $run_time?>  seconds. <?php echo memory_cost();?>  memory cost.
 </div>

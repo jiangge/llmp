@@ -1,8 +1,8 @@
-		   README for LTMP (Lighttpd Mysql PHP)
+		   README for LLMP (Linux Lighttpd Mysql PHP)
 
 INFOMATION
 -------------------------
-Why do you recreate the wheel called the LTMP?
+Why do you recreate the wheel called the LLMP?
 Smaller, faster, more efficently.   
 
 What distributions does it support? 
@@ -11,9 +11,9 @@ What distributions does it support?
 
 INSTALL
 ------------------------- 
-gunzip -cd ltmp.tar.gz | tar xvf -
-cd ltmp
-./ltmp.sh <domain> <mysql_password for root>
+gunzip -cd llmp.tar.gz | tar xvf -
+cd llmp
+./llmp.sh <domain> <mysql_password for root>
 
 DOMAINS
 ------------------------
@@ -28,4 +28,4 @@ of the GNU General Public License terms under which you can copy the files.
 
 HELP
 ------------------------ 
-Please visit at http://chuchuang.org/ltmp for more infomation.
+Please visit at http://llmp.org/ for more infomation.

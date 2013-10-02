@@ -130,7 +130,7 @@ set_root_password() {
 #	return 1
 #    fi
 
-# LTMP.NET
+# LLMP.ORG
 password1=$1
 
     if [ "$password1" = "" ]; then
@@ -265,7 +265,7 @@ else
     echo $echo_n "Change the root password? [Y/n] $echo_c"
 fi
 
-#LTMP.NET
+#LLMP.ORG
 #read reply
 reply=Y
 
@@ -294,7 +294,7 @@ echo
 
 echo $echo_n "Remove anonymous users? [Y/n] $echo_c"
 
-#LTMP.NET
+#LLMP.ORG
 #read reply
 reply=Y
 
@@ -315,7 +315,7 @@ echo "ensures that someone cannot guess at the root password from the network."
 echo
 
 echo $echo_n "Disallow root login remotely? [Y/n] $echo_c"
-#LTMP.NET
+#LLMP.ORG
 #read reply
 reply=Y
 if [ "$reply" = "n" ]; then
@@ -336,7 +336,7 @@ echo "before moving into a production environment."
 echo
 
 echo $echo_n "Remove test database and access to it? [Y/n] $echo_c"
-#LTMP.NET
+#LLMP.ORG
 #read reply
 reply=Y
 if [ "$reply" = "n" ]; then
@@ -356,7 +356,7 @@ echo "will take effect immediately."
 echo
 
 echo $echo_n "Reload privilege tables now? [Y/n] $echo_c"
-#LTMP.NET
+#LLMP.ORG
 #read reply
 reply=Y
 if [ "$reply" = "n" ]; then
