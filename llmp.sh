@@ -62,7 +62,7 @@ REMOVED='libmysqlclient15 libmysqlclient15-dev libmysqlclient-dev mysql-common
 
 TO_INSTALL='build-essential psmisc gcc g++ make autoconf automake cmake libgamin-dev gamin  
            wget cron bzip2 libzip-dev libc6-dev file rcconf flex libreadline-dev  
-           vim bison m4 gawk less make cpp binutils diffutils    
+           vim bison m4 gawk less make cpp binutils diffutils  sendmail
            unzip tar bzip2 libbz2-dev libncurses5 libncurses5-dev     
            libtool libevent-dev libpcre3 libpcre3-dev libpcrecpp0     
            libssl-dev zlibc openssl libsasl2-dev libxml2 libxml2-dev  

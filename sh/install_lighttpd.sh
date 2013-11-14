@@ -58,6 +58,12 @@ include "conf.d/secdownload.conf"
 include "conf.d/expire.conf"
 EOF
 
+cat >> /etc/lighttpd/lighttpd.conf <<EOF  
+$HTTP["url"] =~ "(.png|.css|.js|.jpg|.gif)$" {
+         expire.url = ( "" => "access 2 months" )
+       }
+EOF
+
 cat >> /etc/lighttpd/conf.d/fastcgi.conf <<EOF
 fastcgi.server = ( ".php" =>
                    ( "php-local" =>
