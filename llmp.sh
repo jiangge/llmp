@@ -37,7 +37,7 @@ APP=$CWD/app
 # BEGIN
 
 if [ $# -lt 2 ]; then 
-  echo "Usage: $0 <yourdomain.com> <mysql_password>"
+  echo "Usage: $0 <yourdomain.com> <mysql_password for root>"
   exit 1
 fi
 

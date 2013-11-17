@@ -11,7 +11,7 @@ What distributions does it support?
 
 INSTALL
 ------------------------- 
-gunzip -cd llmp.tar.gz | tar xvf -
+gunzip -cd llmp-x.x.x.tar.gz | tar xvf -
 ./llmp.sh <domain> <mysql_password for root>
 
 DOMAINS
