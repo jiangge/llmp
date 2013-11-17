@@ -141,6 +141,7 @@ init q
 #cp $APP/probe.php $SERVER_ROOT/probe.php
 cp $APP/php.php $SERVER_ROOT/php.php
 cp $APP/index.html $SERVER_ROOT/index.html
+cp -a $APP/images $SERVER_ROOT/
 
 cp $RC/rc.lighttpd /etc/init.d/lighttpd
 cp $RC/rc.php-fpm /etc/init.d/php-fpm
