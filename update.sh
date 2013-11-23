@@ -59,7 +59,7 @@ do
 
 
   DIR=`echo "$filename" | sed -e 's/\(.*\)\.tar\..*/\1/g' `
-  if [ ! -f $DIR ]; then 
+  if [ ! -d $DIR ]; then 
     tar xvf $filename
   fi
 
