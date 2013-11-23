@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.  
 
 
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/php/sbin/:/usr/local/php/bin:/usr/local/mysql/bin:/usr/local/lighttpd/sbin/:~/bin:$PATH
 export PATH
 
 DOMAIN=$1
