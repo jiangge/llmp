@@ -38,6 +38,7 @@ fi
 /etc/init.d/lighttpd stop
 /etc/init.d/mysql stop
 /etc/init.d/php-fpm stop
+/etc/init.d/memcached stop
 
 if [ ! -f $LLMPCONF ]; then
   wget -c http://llmp.org/$LLMPCONF
@@ -56,9 +57,12 @@ do
     wget -c $url -O $filename
   fi
 
-  tar xvf $filename
 
   DIR=`echo "$filename" | sed -e 's/\(.*\)\.tar\..*/\1/g' `
+  if [ ! -f $DIR ]; then 
+    tar xvf $filename
+  fi
+
   cd $DIR 
   [ -f ../sh/$cmdfile.update ] && ../sh/$cmdfile.update 
   cd $CWD
@@ -71,6 +75,7 @@ cd $CWD
 /etc/init.d/mysql start
 /etc/init.d/php-fpm start
 /etc/init.d/lighttpd start
+/etc/init.d/memcached start
 
 
 
