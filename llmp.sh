@@ -126,7 +126,7 @@ done < $LLMPCONF
 echo "====================  install completed ==========================="
 
 cat >> ~/.profile <<EOF
-export PATH=/usr/local/mysql/bin:/usr/local/mysql/sbin/:$PATH
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/php/sbin/:/usr/local/php/bin:/usr/local/mysql/bin:/usr/local/lighttpd/sbin/:~/bin:$PATH
 EOF
 
 . ~/.profile
