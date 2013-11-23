@@ -2,8 +2,8 @@
 
 INFOMATION
 -------------------------
-Why do you recreate the wheel called the LLMP?
-Smaller, faster, more efficently.   
+We have LAMP, LNMP, LANMP, why do you recreate the wheel called the LLMP?
+Just for fun.
 
 What distributions does it support? 
 *Only* Debian and Ubuntu supported currently.
@@ -16,7 +16,11 @@ gunzip -cd llmp-x.x.x.tar.gz | tar xvf -
 
 DOMAINS
 ------------------------
-./domain.sh <add | rm> <domain>
+./domain.sh <add | rm> <domain> 
+
+UPDATE
+------------------------
+./update.sh
 
 
 LICENCE
