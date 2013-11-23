@@ -26,7 +26,7 @@ filename=`basename $PWD`
 now_version=`lighttpd -v|grep lighttpd|cut -d/ -f2|cut -d' ' -f1`
 to_update_version=`echo "$filename"|cut -d'-' -f2`
 
-if [ "$now_version" '>' "$to_update_version" -o "$now_version" = "$to_update_version" ]; then
+if [ "$now_version" '>' "$to_update_version" -o "$now_version" '=' "$to_update_version" ]; then
   echo "Lighttpd updated"
   exit
 fi

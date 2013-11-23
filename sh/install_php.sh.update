@@ -24,7 +24,7 @@ filename=`basename $PWD`
 now_version=`php -v | grep built| cut -d' ' -f2`
 to_update_version=`echo "$filename"|cut -d'-' -f2`
 
-if [ "$now_version" '>' "$to_update_version" -o "$now_version" = "$to_update_version" ]; then
+if [ "$now_version" '>' "$to_update_version" -o "$now_version" '=' "$to_update_version" ]; then
   echo "PHP updated" 
   exit
 fi
