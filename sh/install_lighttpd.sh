@@ -59,7 +59,7 @@ include "conf.d/expire.conf"
 EOF
 
 cat >> /etc/lighttpd/lighttpd.conf <<EOF  
-$HTTP["url"] =~ "(.png|.css|.js|.jpg|.gif)$" {
+\$HTTP["url"] =~ "(.png|.css|.js|.jpg|.gif)$" {
          expire.url = ( "" => "access 2 months" )
        }
 EOF
